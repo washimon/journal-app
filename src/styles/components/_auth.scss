@@ -1,0 +1,115 @@
+.auth {
+  &__main {
+    display: flex;
+    background-color: $primary-c;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  &__wrapper {
+    background-color: $white-c2;
+    box-shadow: 0px 3px $dark-gray-c;
+    border-radius: 0.5;
+    padding: 2rem 3rem;
+    margin: 1rem 0 2rem;
+  }
+  &__title {
+    color: darken($color: $primary-c, $amount: 20);
+    margin-top: 0;
+    font-size: x-large;
+  }
+}
+
+.form {
+  &__group {
+    display: flex;
+    flex-direction: column;
+    font-size: $fs-md;
+    margin-bottom: 1rem;
+    color: $black-c1;
+
+    label {
+      margin-bottom: 0.25rem;
+    }
+
+    input {
+      background-color: $white-c2;
+      font-size: $fs-md;
+      padding: 0.5rem;
+      outline: none;
+      border: 1px solid $black-c1;
+      border-radius: $bor-radius-def;
+
+      &:focus {
+        border: 1px solid $primary-c;
+        background-color: darken($color: $white-c2, $amount: 5);
+      }
+    }
+    input[type='password'] {
+      font-family: Verdana;
+      letter-spacing: 0.125rem;
+    }
+  }
+  &__new-account-link,
+  &__login-link {
+    font-size: $fs-sm;
+    text-align: right;
+    a {
+      @include defaultLink;
+    }
+  }
+  &__error-msg {
+    color: $red-c1;
+    font-size: $fs-sm;
+    margin-top: 0.125rem;
+  }
+  button {
+    @include defaultButton;
+  }
+}
+
+.google-link {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 42px;
+  background-color: $google-blue;
+  border-radius: $bor-radius-def;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  &__icon-wrapper {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $white-c1;
+  }
+  &__icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+  }
+  &__text {
+    color: $white-c1;
+    font-size: $fs-sm;
+    letter-spacing: 0.2px;
+    margin: 0;
+  }
+  &:hover {
+    box-shadow: 0 0 6px $google-blue;
+  }
+  &:active {
+    background: $button-active-blue;
+  }
+}

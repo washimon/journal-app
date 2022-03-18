@@ -1,0 +1,16 @@
+.note-appbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $primary-c;
+  color: $white-c2;
+  padding: 10px 20px;
+  &__buttons {
+    button {
+      @include button($primary-c);
+      &:last-child {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}

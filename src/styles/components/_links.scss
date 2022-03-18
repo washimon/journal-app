@@ -1,0 +1,8 @@
+@mixin defaultLink() {
+  color: $black-c1;
+  text-decoration-line: none;
+  font-weight: 600;
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,103 @@
+.journal {
+  &__main {
+    display: flex;
+  }
+  &__main-content {
+    flex: 1;
+  }
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: $dark-gray-c;
+    // background-color: $white-c1;
+    color: $white-c2;
+    padding: 0 0.5rem;
+    max-width: 20rem;
+  }
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  &__brand {
+    display: flex;
+    span {
+      margin-left: 0.25rem;
+    }
+  }
+  &__logout-btn {
+    @include button($primary-c);
+  }
+}
+.new-entry {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: color 300ms ease;
+  transition: text-shadow 300ms ease;
+  margin-bottom: 1.6rem;
+  justify-content: center;
+  align-self: center;
+  color: darken($color: $white-c2, $amount: 5);
+
+  i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  span {
+    font-size: $fs-md;
+  }
+  &:hover {
+    color: $white-c2;
+    text-shadow: 0px 4px 15px rgba($color: #fff, $alpha: 0.5);
+  }
+}
+.entries {
+  overflow-y: scroll;
+  max-height: 22.5rem;
+  .entry {
+    display: grid;
+    grid-template-columns: calc(3 * 5rem / 4) auto auto;
+    margin-bottom: 0.5rem;
+    margin-right: 0.25rem;
+    height: 5rem;
+    overflow: hidden;
+    background-color: $white-c1;
+    border-radius: $bor-radius-def;
+    color: $dark-gray-c;
+    &:hover {
+      cursor: pointer;
+    }
+    &__picture {
+      background-image: url('https://images.unsplash.com/photo-1493925410384-84f842e616fb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=465&q=80');
+      background-size: cover;
+    }
+    &__body {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+      overflow: hidden;
+    }
+    &__title {
+      font-size: $fs-md;
+    }
+    &__content {
+      font-size: $fs-xxsm;
+      letter-spacing: 0.125rem;
+      white-space: pre-line;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__date-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: $fs-md;
+      padding-right: 0.25rem;
+    }
+  }
+}

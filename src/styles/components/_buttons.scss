@@ -1,0 +1,35 @@
+@mixin defaultButton($width: 100%, $bc: $primary-c) {
+  @include button($bc);
+  background-color: $bc;
+  padding: 0;
+  width: $width;
+  margin-bottom: 1rem;
+
+  &:hover {
+    background-color: darken($color: $bc, $amount: 10);
+  }
+  &:disabled {
+    background-color: lighten($color: $bc, $amount: 20);
+    cursor: unset;
+    &:hover {
+      background-color: lighten($color: $bc, $amount: 20);
+    }
+  }
+}
+@mixin button($bc, $px: 1rem) {
+  height: 42px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: $white-c2;
+  font-size: $fs-md;
+  font-weight: 600;
+  border-radius: $bor-radius-def;
+  letter-spacing: 0.2px;
+  transition: background-color 300ms ease;
+  padding: 0 $px;
+  
+  &:hover {
+    background-color: darken($color: $bc, $amount: 10);
+  }
+}
