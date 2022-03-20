@@ -1,8 +1,15 @@
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../../firebase/config'
 import { LOGIN_SUCCESSFULLY } from '../../types'
 
 export const loginAction = (email, password) => {
-  return (dispatch) => {
-    dispatch(loginSuccesfully('123ABC', 'washimon'))
+  return async (dispatch) => {
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password)
+      dispatch(
+        loginSuccesfully(user.uid, user.displayName || 'Supuestamente washimon')
+      )
+    } catch (error) {}
   }
 }
 

@@ -35,7 +35,7 @@ export const LoginPage = () => {
     if (Object.keys(currentErrors).length > 0) return;
     // console.log('listo para loguear');
     await login(email, password);
-    // history.replace('/');
+    history.replace('/');
   };
 
   const handleStartLoginWithGoogle = async () => {

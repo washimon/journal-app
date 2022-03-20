@@ -1,8 +1,9 @@
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { registerAction } from '../actions/registerAction';
-import { useForm } from '../hooks/useForm';
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { registerAction } from '../actions/registerAction'
+import { getErrorsFromForm } from '../helpers'
+import { useForm } from '../hooks/useForm'
 
 const initialState = {
   firstName: '',
@@ -10,31 +11,33 @@ const initialState = {
   email: '',
   password: '',
   repeatPassword: '',
-};
+}
 
 export const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const history = useHistory()
   const {
     formState,
     formErrors,
     handleInputChange,
     handleInputBlur,
     validateForm,
-  } = useForm(initialState);
-  const { firstName, lastName, email, password, repeatPassword } = formState;
+  } = useForm(initialState)
+  const { firstName, lastName, email, password, repeatPassword } = formState
 
-  const register = async (user) => dispatch(registerAction(user));
+  const register = async (user) => dispatch(registerAction(user))
 
   const handleRegister = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    validateForm(formState);
-    if (Object.keys(formErrors).length > 0) return;
-    console.log('listo para registrar..');
-    await register(formState);
-    // history.push('/auth/login');
-  };
+    validateForm(formState)
+    const currentErrors = getErrorsFromForm(formState, formErrors)
+    if (Object.keys(currentErrors).length > 0) return
+
+    console.log('listo para registrar..')
+    await register(formState)
+    history.push('/auth/login')
+  }
 
   return (
     <div className="auth__wrapper">
@@ -120,5 +123,5 @@ export const RegisterPage = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
