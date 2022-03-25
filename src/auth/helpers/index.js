@@ -29,11 +29,16 @@ export const getErrorFromField = (name, value, formErrors) => {
         : delete formErrors[name]
       break
     case 'password':
-      const regexPass = /^[\w]{3}[\S]+$/
+      const regexPass = /^[\w]{5}[\S]+$/
       !value
         ? (formErrors[name] = 'Requerido')
         : !regexPass.test(value)
-        ? (formErrors[name] = '4 caracteres como mínimo y sin espacios')
+        ? (formErrors[name] = '6 caracteres como mínimo sin espacios')
+        : delete formErrors[name]
+      break
+    case 'repeatPassword':
+      !value
+        ? (formErrors[name] = 'Repita la contraseña')
         : delete formErrors[name]
       break
     default:

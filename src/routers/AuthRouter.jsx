@@ -6,8 +6,8 @@ export const AuthRouter = () => {
   return (
     <div className="auth__main">
       <Switch>
-        <Route exact path="/auth/login" component={LoginPage} />
-        <Route exact path="/auth/registro" component={RegisterPage} />
+        <Route path="/auth/login" component={LoginPage} />
+        <Route path="/auth/registro" component={RegisterPage} />
         <Redirect to="/auth/login" />
       </Switch>
     </div>

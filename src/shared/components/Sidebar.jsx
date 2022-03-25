@@ -1,14 +1,20 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { signOutAction } from '../../auth/actions/signOutAction'
 import { Entries } from './Entries'
 
 export const Sidebar = () => {
   const history = useHistory()
-  const { displayName } = useSelector(({ auth }) => ({
-    displayName: auth.displayName,
-  }))
-  const handleLogout = () => {
+  const dispatch = useDispatch()
+  const { displayName } = useSelector(({ auth }) => auth.userLogged)
+  const { submitting } = useSelector(({ auth }) => auth)
+
+  const signOut = async () => dispatch(signOutAction())
+
+  const handleSignOut = async () => {
     history.replace('/auth/login')
+    const signedOut = await signOut()
+    signedOut && history.replace('/auth/login')
   }
 
   return (
@@ -18,8 +24,12 @@ export const Sidebar = () => {
           <i className="fa-regular fa-moon"></i>
           <span>{displayName}</span>
         </h3>
-        <button onClick={handleLogout} className="header__logout-btn">
-          Logout
+        <button
+          onClick={handleSignOut}
+          className="header__logout-btn"
+          disabled={submitting}
+        >
+          Cerrar sesión
         </button>
       </div>
       <div className="new-entry">

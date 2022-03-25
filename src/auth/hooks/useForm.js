@@ -18,10 +18,7 @@ export const useForm = (initialForm = {}) => {
   )
 
   const handlePasswordInput = (name, value) => {
-    if (
-      fieldsClicked['password'] &&
-      name === 'repeatPassword'
-    ) {
+    if (fieldsClicked['password'] && name === 'repeatPassword') {
       if (formState.password !== value) {
         setFormErrors({
           ...formErrors,
@@ -89,6 +86,13 @@ export const useForm = (initialForm = {}) => {
     })
   }
 
+  const setInitialEmail = (email = '') => {
+    setFormState({
+      ...formState,
+      email,
+    })
+  }
+
   return {
     formState,
     formErrors,
@@ -96,5 +100,6 @@ export const useForm = (initialForm = {}) => {
     handleInputBlur,
     validateForm,
     resetForm,
+    setInitialEmail,
   }
 }

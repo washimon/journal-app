@@ -1,7 +1,7 @@
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { registerAction } from '../actions/registerAction'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, Link } from 'react-router-dom'
+import { registerAction } from '../actions'
 import { getErrorsFromForm } from '../helpers'
 import { useForm } from '../hooks/useForm'
 
@@ -24,6 +24,13 @@ export const RegisterPage = () => {
     validateForm,
   } = useForm(initialState)
   const { firstName, lastName, email, password, repeatPassword } = formState
+  const { authErrorMsg } = useSelector(({ auth }) => auth)
+
+  useEffect(() => {
+    return () => {
+      authErrorMsg && dispatch(clearAuthErrorAction())
+    }
+  }, [])
 
   const register = async (user) => dispatch(registerAction(user))
 
@@ -35,13 +42,14 @@ export const RegisterPage = () => {
     if (Object.keys(currentErrors).length > 0) return
 
     console.log('listo para registrar..')
-    await register(formState)
-    history.push('/auth/login')
+    const registered = await register(formState)
+    registered && history.push('/auth/login')
   }
 
   return (
     <div className="auth__wrapper">
       <h3 className="auth__title">Registro</h3>
+      {authErrorMsg && <AuthErrorMsg message={authErrorMsg} />}
       <form onSubmit={handleRegister} className="form">
         <div className="form__group">
           <label htmlFor="register-first-name">Nombres</label>

@@ -1,0 +1,8 @@
+.auth-error-msg {
+  color: $red-c1;
+  background-color: lighten($color: $red-c1, $amount: 42);
+  padding: 0.75rem 1rem;
+  font-size: $fs-xsm;
+  margin-bottom: 1rem;
+  border-radius: $bor-radius-def;
+}

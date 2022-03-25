@@ -1,53 +1,67 @@
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import googleLogo from '../../assets/img/google-logo.png';
-import { googleLoginAction, loginAction } from '../actions';
-import { getErrorsFromForm } from '../helpers';
-import { useForm } from '../hooks/useForm';
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, Link } from 'react-router-dom'
+import googleLogo from '../../assets/img/google-logo.png'
+import { googleLoginAction, loginAction } from '../actions'
+import { clearAuthErrorAction } from '../actions/uiAction'
+import { AuthErrorMsg } from '../components/AuthErrorMsg'
+import { getErrorsFromForm } from '../helpers'
+import { useForm } from '../hooks/useForm'
 
 const initialState = {
   email: '',
   password: '',
-};
+}
 
 export const LoginPage = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const history = useHistory()
+  const dispatch = useDispatch()
   const {
     formState,
     formErrors,
     handleInputChange,
     handleInputBlur,
     validateForm,
-  } = useForm(initialState);
-  const { email, password } = formState;
+    setInitialEmail,
+  } = useForm(initialState)
+  const { email, password } = formState
+  const { submitting, registeredUser, authErrorMsg } = useSelector(
+    ({ auth }) => auth
+  )
+
+  useEffect(() => {
+    registeredUser && setInitialEmail(registeredUser)
+
+    return () => {
+      authErrorMsg && dispatch(clearAuthErrorAction())
+    }
+  }, [])
 
   const login = async (email, password) =>
-    dispatch(loginAction(email, password));
-  const googleLogin = async () => dispatch(googleLoginAction());
+    dispatch(loginAction(email, password))
+  const googleLogin = async () => dispatch(googleLoginAction())
 
   const handleStartLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    validateForm(formState);
-    const currentErrors = getErrorsFromForm(formState, formErrors);
-    if (Object.keys(currentErrors).length > 0) return;
-    // console.log('listo para loguear');
-    await login(email, password);
-    history.replace('/');
-  };
+    validateForm(formState)
+    const currentErrors = getErrorsFromForm(formState, formErrors)
+    if (Object.keys(currentErrors).length > 0) return
+    const logged = await login(email, password)
+
+    logged && history.replace('/')
+  }
 
   const handleStartLoginWithGoogle = async () => {
-    try {
-      await googleLogin();
-      history.replace('/');
-    } catch (error) {}
-  };
+    const logged = await googleLogin()
+
+    logged && history.replace('/')
+  }
 
   return (
     <div className="auth__wrapper">
-      <h3 className="auth__title">Login</h3>
+      <h3 className="auth__title">Inicia sesión</h3>
+      {authErrorMsg && <AuthErrorMsg message={authErrorMsg} />}
       <form onSubmit={handleStartLogin} className="form">
         <div className="form__group">
           <label htmlFor="login-email">Email</label>
@@ -78,8 +92,10 @@ export const LoginPage = () => {
             <span className="form__error-msg">{formErrors.password}</span>
           )}
         </div>
-        <button>Iniciar sesión</button>
-        <div className="google-link">
+        <button type="submit" disabled={submitting}>
+          Iniciar sesión
+        </button>
+        <div onClick={handleStartLoginWithGoogle} className="google-link">
           <div className="google-link__icon-wrapper">
             <img
               className="google-link__icon"
@@ -87,7 +103,7 @@ export const LoginPage = () => {
               alt="Google logo"
             />
           </div>
-          <p onClick={handleStartLoginWithGoogle} className="google-link__text">
+          <p className="google-link__text">
             <b>Sign in with google</b>
           </p>
         </div>
@@ -97,5 +113,5 @@ export const LoginPage = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}

@@ -2,16 +2,19 @@
   &__main {
     display: flex;
     background-color: $primary-c;
-    justify-content: center;
     align-items: center;
     min-height: 100vh;
   }
   &__wrapper {
     background-color: $white-c2;
     box-shadow: 0px 3px $dark-gray-c;
-    border-radius: 0.5;
+    border-radius: $bor-radius-def;
     padding: 2rem 3rem;
-    margin: 1rem 0 2rem;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 24rem;
   }
   &__title {
     color: darken($color: $primary-c, $amount: 20);
